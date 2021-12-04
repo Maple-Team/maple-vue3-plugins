@@ -1,12 +1,24 @@
-<script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import HelloWorld from './components/HelloWorld.vue'
+<script lang="ts">
+import { defineComponent } from "vue";
+export default defineComponent({
+  data() {
+    return {
+      data: Array.from({ length: 100 }, (_, i) => `src/assets/logo.png?t=${i}`),
+    };
+  },
+  methods: {
+    onChange() {
+      this.data = Array.from(
+        { length: 50 },
+        (_, i) => `src/assets/demo.jpg?t=${i}`
+      );
+    },
+  },
+});
 </script>
-
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
+  <img alt="Vue logo" v-lazy="item" v-for="item in data" :key="item" />
+  <button class="btn" @click="onChange">change</button>
 </template>
 
 <style>
@@ -17,5 +29,14 @@ import HelloWorld from './components/HelloWorld.vue'
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.btn {
+  position: fixed;
+  right: 10px;
+  top: 10px;
+}
+img {
+  width: 400px;
+  height: 400px;
 }
 </style>
